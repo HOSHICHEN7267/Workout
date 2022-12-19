@@ -5,14 +5,126 @@
     <title>選擇模式頁</title>
   </head>
   <body>
-    <a class="single-btn" href="">
-      <p>單人</p>
+    <style>
+      .wrap {
+        margin: 0 auto;
+        width: 1080px;
+      }
+      .topbar {
+        width: 45%;
+        height: 8.5vh;
+        margin: 0 auto;
+        padding-left: 6vw;
+        display: flex;
+        align-items: center;
+        transform: translateY(40px);
 
-      <img src="https://i.imgur.com/5t7PDm9.png" />
-    </a>
-    <a class="dual-btn" href="">
-      <p>雙人</p>
-      <img src="https://i.imgur.com/pUwophA.png" />
-    </a>
+        font-size: 30px;
+        color: white;
+        font-family: "Noto Sans TC";
+        letter-spacing: 10px;
+
+        border-radius: 50px;
+        background: #de3636;
+      }
+
+      .boxes {
+        margin-bottom: 5em;
+      }
+      /* transform: translateX(-450px) translateY(200px);
+      }
+
+      .neurobox {
+        width: 250px;
+        height: 150px;
+        border-radius: 50px;
+        background: #dedede;
+
+        transform: translateX(160px);
+
+        font-family: "Noto Sans TC";
+        margin: auto;
+        line-height: 40px;
+      }
+
+      .raceText {
+        font-family: "Noto Sans TC";
+        text-align: center;
+        font-size: 30px;
+        margin: auto;
+        color: #4d4d4d;
+        transform: translateY(24px);
+      }
+
+      .raceText2 {
+        text-align: center;
+        font-size: 30px;
+        color: #de3636;
+        margin: auto;
+      }
+
+      .mainBox {
+        margin: 0 auto;
+        transform: translateY(-280px) translateX(180px);
+        width: 500px;
+        height: 500px;
+        border-radius: 50px;
+        background: #dedede;
+
+        font-family: "Noto Sans TC";
+      }
+
+      .mainText {
+        transform: translateY(30px);
+        text-align: center;
+        font-size: 30px;
+        color: #4d4d4d;
+      }
+
+      .mainText2 {
+        transform: translateY(-5px);
+        text-align: center;
+        font-size: 40px;
+        color: #de3636;
+      } */
+      img {
+        display: block;
+      }
+      body {
+        background-color: black;
+        font-family: "Noto Sans TC";
+      }
+      .boxes {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 110px;
+      }
+      .boxes a {
+        padding: 50px 53px 12px 53px;
+        display: block;
+        background-color: #fff;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 64px;
+        line-height: 77px;
+        text-align: center;
+        color: #ff1818;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        text-decoration: none;
+      }
+    </style>
+    <div class="wrap">
+      <div class="topbar">健身競賽系統 Workout</div>
+      <div class="boxes">
+        <a class="single-btn" href="#">
+          <p>單人</p>
+          <img src="https://i.imgur.com/5t7PDm9.png" />
+        </a>
+        <a class="dual-btn" href="#">
+          <p>雙人</p>
+          <img src="https://i.imgur.com/pUwophA.png" />
+        </a>
+      </div>
+    </div>
   </body>
 </html>
