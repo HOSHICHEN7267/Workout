@@ -4,29 +4,127 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>單人競賽頁面 計次類</title>
+    <title>雙人競賽頁面 計次類</title>
   </head>
   <body>
-    <div>
-      <h2>您的次數</h2>
-      <h1>666</h1>
-      <h3>倒數計時</h3>
-      <h2>30</h2>
-      <h3>s</h3>
-    </div>
-
-    <div>
-      <button id="btn">開始</button>
-    </div>
-
-    <div>
-      <h3>對手次數</h3>
-      <h3>87</h3>
-    </div>
-
-    <div>
-      <h3>競賽項目</h3>
-      <h3>伏地挺身</h3>
-    </div>
-  </body>
-</html>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700;900&display=swap");
+  
+      .topbar {
+        width: 45%;
+        height: 8.5vh;
+        margin: 0 auto;
+        padding-left: 6vw;
+        display: flex;
+        align-items: center;
+        transform: translateY(40px);
+  
+        font-size: 30px;
+        color: white;
+        font-family: "Noto Sans TC";
+        letter-spacing: 10px;
+  
+        border-radius: 50px;
+        background: #de3636;
+      }
+  
+      .boxes {
+        margin-bottom: 5em;
+        transform: translateX(-450px) translateY(200px);
+      }
+  
+      .neurobox {
+        width: 250px;
+        height: 150px;
+        border-radius: 50px;
+        background: #dedede;
+  
+        transform: translateX(160px);
+  
+        font-family: "Noto Sans TC";
+        margin: auto;
+        line-height: 40px;
+      }
+  
+      .raceText {
+        font-family: "Noto Sans TC";
+        text-align: center;
+        font-size: 30px;
+        margin: auto;
+        color: #4d4d4d;
+        transform: translateY(24px);
+      }
+  
+      .raceText2 {
+        text-align: center;
+        font-size: 30px;
+        color: #de3636;
+        margin: auto;
+      }
+  
+      .mainBox {
+        margin: 0 auto;
+        transform: translateY(-280px) translateX(180px);
+        width: 500px;
+        height: 500px;
+        border-radius: 50px;
+        background: #dedede;
+  
+        font-family: "Noto Sans TC";
+      }
+  
+      .mainText {
+        transform: translateY(30px);
+        text-align: center;
+        font-size: 30px;
+        color: #4d4d4d;
+      }
+  
+      .mainText2 {
+        transform: translateY(-5px);
+        text-align: center;
+        font-size: 40px;
+        color: #de3636;
+      }
+    </style>
+  
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>雙人結束頁面 計次類</title>
+    </head>
+    <body style="overflow: hidden; background-color: black">
+      <div class="topbar">健身競賽系統 Workout</div>
+      <div class="boxes">
+        <div class="neurobox">
+          <p class="raceText">
+            <b>競賽項目</b>
+          </p>
+          <br/>
+          <p class="raceText2">伏地挺身</p>
+        </div>
+      </div>
+  
+      <div class="boxes">
+        <div class="neurobox">
+          <p class="raceText">
+            <b>對手次數</b>
+          </p>
+          <br />
+          <p class="raceText2">87</p>
+        </div>
+      </div>
+  
+      <div class="mainBox">
+        <h1 class="mainText">您的次數</h1>
+        </br >
+        <h2 class="mainText2">666</h2>
+        </br>
+        <h1 class="mainText" style="transform: translateY(-30px)">倒數計時</h1>
+        </br>
+        <h1 class="mainText2" style="transform: translateY(-60px)">30 <span>s</span></h1>
+        </br>
+      </div>
+    </body>
+  </html>
