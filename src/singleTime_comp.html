@@ -1,27 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<style>
+
+    /* ==UserStyle==
+  @name           mastodon.social - 12/14/2022, 9:37:56 AM
+  @namespace      github.com/openstyles/stylus
+  @version        1.0.0
+  @description    Styles images posted on mastodon.social based on whether or not they have alt text.
+  @author         @Meyerweb@mastodon.social, https://meyerweb.com/
+  ==/UserStyle== */
+
+  @-moz-document regexp(".*\.social.*") {
+    .media-gallery__item-thumbnail img:not([alt]) {
+      filter: grayscale(1) contrast(0.5);
+    }
+    .media-gallery__item-thumbnail img:not([alt]):hover {
+      filter: none;
+    }
+    .media-gallery__item-thumbnail:has(img[alt]) {
+      position: relative;
+    }
+    .media-gallery__item-thumbnail:has(img[alt])::after {
+      content: "ALT";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      border-radius: 5px 0 0 0;
+      border: 1px solid #FFF3;
+      color: #FFFD;
+      background: #000A;
+      border-width: 1px 0 0 1px;
+      padding-block: 0.5em 0.4em;
+      padding-inline: 0.7em 0.8em;
+      font: bold 90% sans-serif;
+    }
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700;900&display=swap');
+
+  .topbar{
+    width: 45%;
+    height: 8.5vh;
+    margin: 0 auto;
+    padding-left: 6vw;
+    display: flex;
+    align-items: center;
+    transform:translateY(40px);
+
+    font-size: 30px;
+    color: white;
+    font-family: 'Noto Sans TC';
+    letter-spacing: 10px;
+    
+    border-radius: 50px;
+    background: #DE3636;
+  }
+
+  .boxes{
+    margin-bottom: 5em;
+    transform:translateX(-450px) translateY(200px);
+  }
+
+  .neurobox{
+    width: 170px;
+    height: 200px;
+    border-radius: 50px;
+    background: #dedede;
+    transform: translateX(360px) translateY(-350px);
+
+    font-family: 'Noto Sans TC';
+    margin: auto;
+    line-height: 40px;
+  }
+
+  .raceText{
+    font-family: 'Noto Sans TC';
+    text-align: center;
+    font-size: 30px;
+    margin: auto;
+    color: #4d4d4d;
+    transform:translateY(24px);
+  }
+
+  .raceText2{
+    text-align: center;
+    font-size: 30px;
+    color: 	#DE3636;
+    margin: auto;
+  }
+
+  .mainBox{
+    margin:0 auto;
+    width: 700px;
+    height: 500px;
+    border-radius: 50px;
+    background: #dedede;
+    transform: translateX(-100px) translateY(80px);
+    font-family: 'Noto Sans TC';
+  }
+
+  .mainText{
+    text-align: center;
+    font-size: 40px;
+    letter-spacing: 6px;
+    color: #4d4d4d;
+  }
+
+  .mainText2{
+    text-align: center;
+    font-size: 70px;
+    color: #DE3636;
+  }
+</style>
+
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>單人競賽頁面 計時類</title>
   </head>
-  <body>
-    <div>
-      <h2>當前距離</h2>
-      <h2>10cm</h2>
-      <h3>計時</h3>
-      <h2>30</h2>
-      <h3>s</h3>
+  <body style="background-color:black;">
+    <div class="topbar">
+      健身競賽系統 Workout
+    </div>
+    
+    <div class="mainBox">
+      <h2 class="mainText" style="transform:translateY(40px);">當前距離</h2>
+      <h2 class="mainText2">10cm</h2>
+      <h3 class="mainText">計時</h3>
+      <h2 class="mainText2" style="transform:translateY(-36px);">30s</h2>
     </div>
 
-    <div>
+    <!-- <div>
       <button id="btn">開始</button>
-    </div>
+    </div> -->
 
-    <div>
-      <h3>運動項目</h3>
-      <h3>平板支撐</h3>
+    <div class="neurobox">
+      <h3 class="mainText" style="font-size:28px; transform:translateY(44px); letter-spacing:2px;">運動項目</h3>
+      <h3 class="mainText2" style="font-size:26px; transform:translateY(40px);">平板支撐</h3>
     </div>
   </body>
 </html>
+
+
