@@ -23,6 +23,10 @@ app.use("/img", imageRoute);
 io.on('connection', (socket) => {
     socket.join("push-up-game");
     console.log(socket.id + " is connected");
+    socket.on("data", (data) => {
+        // console.log(data)
+        io.emit("distance", data);
+    })
 });
 
 server.listen(port, () => {

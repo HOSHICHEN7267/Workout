@@ -60,14 +60,12 @@
       }
 
       .neurobox {
-        width: 170px;
-        height: 200px;
+        width: 10vw;
+        height: 20vh;
         border-radius: 50px;
         background: #dedede;
         transform: translateX(360px) translateY(-350px);
         font-family: "Noto Sans TC";
-        margin: auto;
-        line-height: 40px;
       }
 
       .raceText {
@@ -98,49 +96,120 @@
 
       .mainText {
         text-align: center;
-        font-size: 40px;
+        font-size: 2.5em;
         letter-spacing: 6px;
         color: #4d4d4d;
       }
 
       .mainText2 {
         text-align: center;
-        font-size: 70px;
+        font-size: 5em;
         color: #de3636;
       }
+
+      #startBtn{
+        font-size: 26px; 
+        background-color: #dedede; 
+        color: #4d4d4d;
+      }
+      #startBtn:hover{
+        background-color: #fff;
+        color: #de3636;
+      }
+      #mainPageBtn{
+        background-color: #dedede; 
+        margin-left: 3vw; 
+        width: 8vw; 
+        height: 5vh; 
+        font-size: 26px; 
+        border-radius: 50px
+      }
+      #mainPageBtn:hover{
+        background-color: #fff;
+        color: #de3636;
+      }
+
       body {
         background-color: black;
       }
     </style>
-    <div class="topbar">健身競賽系統 Workout</div>
+    <div class="topbar">
+        健身競賽系統 Workout 
+        <button id="mainPageBtn">回到首頁</button>
+    </div>
     <div>
       <div class="mainBox">
         <h2 class="mainText" style="transform: translateY(40px)">當前次數</h2>
-        <h2 class="mainText2">666</h2>
-        <h3 class="mainText">倒數計時</h3>
-        <h2 class="mainText2" style="transform: translateY(-36px)">
-          30<span>s</span>
-        </h2>
+        <div style="display: flex; justify-content: center;">
+            <span id="doneCount" class="mainText2">0</span>
+            <span class="mainText2">/</span>
+            <span id="goal" class="mainText2">0</span>
+        </div>
+        <h3 id="pushUpAmount" class="mainText">倒數計時</h3>
+        <h2 id="pushUpCount" class="mainText2" style="transform: translateY(-36px)"></h2>
       </div>
     </div>
 
-    <div class="neurobox">
-      <h3
-        class="mainText"
-        style="
-          font-size: 28px;
-          transform: translateY(44px);
-          letter-spacing: 2px;
-        "
-      >
-        運動項目
-      </h3>
-      <h3
-        class="mainText2"
-        style="font-size: 26px; transform: translateY(40px)"
-      >
-        伏地挺身
-      </h3>
+    <div style="display: flex; align-items: center; flex-direction: column; margin: top 0;">
+        <div style="margin-bottom: 2vh" class="neurobox">
+          <h3 class="mainText" style="font-size:2em">運動項目</h3>
+          <h3 class="mainText2" style="font-size:2em">伏地挺身</h3>
+        </div>
+        <button id="startBtn" class="neurobox">
+            準備開始
+        </button>
+        <div class="neurobox" style="background-color: white; width: 10vw; height: 7vh; margin-top: 1vh;">
+            <p style="color: #de3636; margin-left: 1vw; margin-top: 1vh; font-size: 1.5em">組數: <span id="setCount" style="color: #de3636;"></span></p>
+        </div>
     </div>
   </body>
+  
+  <script>
+    document.getElementById("goal").innerText = localStorage.getItem("goal");
+    document.getElementById("pushUpCount").innerHTML = localStorage.getItem("time")+" <span>s</span>";
+    document.getElementById("mainPageBtn").onclick = () => {
+        window.location = "/";
+    }
+    localStorage.setItem("setCount", 0);
+    document.getElementById("setCount").innerHTML = localStorage.getItem("setCount");
+
+    // 遊戲開始
+    document.getElementById("startBtn").onclick = () => {
+        // 倒數3秒
+        let flag = 3
+        document.getElementById("startBtn").innerText = flag;
+        let countDown = setInterval(() => {
+            flag--;
+            document.getElementById("startBtn").innerText = flag;
+            if(flag === 0){
+                document.getElementById("startBtn").innerText = "Start!!!";
+                clearInterval(countDown);
+            }
+        }, 1000)
+
+        // 倒數完後開始
+        setTimeout(() => {
+            let timeCount = Number(localStorage.getItem("time"));
+            let countDown2 = setInterval(() => {
+                timeCount -= 1;
+                document.getElementById("pushUpCount").innerHTML = timeCount+" <span>s</span>";
+                // 時間到結束
+                if(timeCount === 0){
+                    // 組數計算: 時間到時doneCount >= goal算一組
+                    if(document.getElementById("doneCount").value >= localStorage.getItem("goal")){
+                        localStorage.setItem("setCount", localStorage.getItem("setCount")+1);
+                        document.getElementById("setCount").innerHTML = localStorage.getItem("setCount")
+                    }
+
+                    clearInterval(countDown2)
+                    document.getElementById("pushUpCount").innerHTML = "Time's Up";
+                    document.getElementById("startBtn").innerText = "ReStart";
+                    document.getElementById("startBtn").onclick = () => {
+                        window.location.reload();
+                    }
+                }
+            }, 1000)
+        }, 3000)
+    }
+</script>
 </html>

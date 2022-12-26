@@ -1,123 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>操作說明頁 伏地挺身</title>
-  </head>
-  <body>
+</head>
+<body>
     <style>
 
-      @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700;900&display=swap');
-      
-      .wrap {
-        margin: 0 auto;
-        width: 1080px;
-      }
-      .topbar {
-        width: 45%;
-        height: 8.5vh;
-        margin: 0 auto;
-        padding-left: 6vw;
-        display: flex;
-        align-items: center;
-        transform: translateY(40px);
-
-        font-size: 30px;
-        color: white;
-        font-family: "Noto Sans TC";
-        letter-spacing: 10px;
-
-        border-radius: 50px;
-        background: #ff1818;
-      }
-
-      img {
-        display: block;
-      }
-      body {
-        background-color: black;
-        font-family: "Noto Sans TC";
-      }
-      .boxes {
-        display: flex;
-        justify-content: center;
-        margin-top: 110px;
-      }
-      .content {
-        background-color: #fff;
-        border-radius: 50px;
-        padding:0 82px 10px 82px;
-      }
-      .sport-type {
-        font-weight: 700;
-        font-size: 36px;
-        line-height: 44px;
-        text-align: center;
-        color: #ff1818;
-        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      }
-      .sport-steps, .distance{
-        margin:0 auto;
-        font-weight: 700;
-        font-size: 36px;
-        line-height: 44px;
-        text-align: left;
-        color: black;
-        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      }
-      .sport-steps{
-        margin-bottom: 33px;
-      }
-      .dist{
-        font-size: 64px;
-        color:#ff1818;
-      }
-      .distance{
-        display: flex;
-        justify-content: space-between;
-      }
-      .distance p{
-        display: inline;
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@700;900&display=swap');
         
-      }
-      .boxes a {
-        padding: 0 0 12px 0;
-        display: block;
-        background-color: #fff;
-        border-radius: 50px;
-        font-weight: 700;
-        font-size: 40px;
-        line-height: 77px;
-        text-align: center;
-        color: #ff1818;
-        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        text-decoration: none;
-      }
-    </style>
-
-    <div class="topbar">健身競賽系統 Workout</div>
-    <div class="wrap">
-      <div class="boxes">
-        <div class="content">
-          <p class="sport-type">伏地挺身</p>
-          <p class="sport-steps">1. 將感測器放置於胸前地上，並將雙手打直３秒</br>
-          2. 螢幕會顯示當前距離，按下按鈕以紀錄數據</br>
-          3. 可以開始快樂運動了</p>
-          <div class="distance">
-            <div class="distance-text">
-              <p>當前距離</p>
-                <p class="dist">60.0</p>
-                <span>cm</span>
-                <div style="margin-top: 2vh;">
-                    <input id="distance" style="width: 50%; height: 5vh; font-size: 1em;" placeholder="請輸入距離" /> cm
-                    <input style="width: 50%; height: 5vh; font-size: 1em; margin-top: 1vh" placeholder="請輸入時間" /> s
-                </div>
+        .wrap {
+          margin: 0 auto;
+          width: 1080px;
+        }
+        .topbar {
+          width: 45%;
+          height: 8.5vh;
+          margin: 0 auto;
+          padding-left: 6vw;
+          display: flex;
+          align-items: center;
+          transform: translateY(40px);
+  
+          font-size: 30px;
+          color: white;
+          font-family: "Noto Sans TC";
+          letter-spacing: 10px;
+  
+          border-radius: 50px;
+          background: #ff1818;
+        }
+  
+        img {
+          display: block;
+        }
+        body {
+          background-color: black;
+          font-family: "Noto Sans TC";
+        }
+        .boxes {
+          display: flex;
+          justify-content: center;
+          margin-top: 110px;
+        }
+        .content {
+          background-color: #fff;
+          border-radius: 50px;
+          padding:0 82px 10px 82px;
+        }
+        .sport-type {
+          font-weight: 700;
+          font-size: 36px;
+          line-height: 44px;
+          text-align: center;
+          color: #ff1818;
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+        .sport-steps, .distance{
+          margin:0 auto;
+          font-weight: 700;
+          font-size: 36px;
+          line-height: 44px;
+          text-align: left;
+          color: black;
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+        .sport-steps{
+          margin-bottom: 33px;
+        }
+        .dist{
+          font-size: 64px;
+          color:#ff1818;
+        }
+        .distance{
+          display: flex;
+          justify-content: space-between;
+        }
+        .distance p{
+          display: inline;
+          
+        }
+        .boxes a {
+          padding: 0 0 12px 0;
+          display: block;
+          background-color: #fff;
+          border-radius: 50px;
+          font-weight: 700;
+          font-size: 40px;
+          line-height: 77px;
+          text-align: center;
+          color: #ff1818;
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          text-decoration: none;
+        }
+      </style>
+  
+      <div class="topbar">健身競賽系統 Workout</div>
+      <div class="wrap">
+        <div class="boxes">
+          <div class="content">
+            <p class="sport-type">伏地挺身</p>
+            <p class="sport-steps">1. 將感測器放置於胸前地上，並將雙手打直３秒</br>
+            2. 螢幕會顯示當前距離，按下按鈕以紀錄數據</br>
+            3. 可以開始快樂運動了</p>
+            <div class="distance">
+              <div class="distance-text">
+                <p>當前距離</p>
+                  <p id="currentDisance" class="dist">40</p>
+                  <span>cm</span>
+                  <div style="margin-top: 2vh;">
+                      <input type="number" id="inputGoal" style="width: 50%; height: 5vh; font-size: 1em;" placeholder="請輸入目標次數" /> 次
+                      <input type="number" id="distance" style="width: 50%; height: 5vh; font-size: 1em; margin-top: 1vh" placeholder="請輸入距離" /> cm
+                      <input type="number" id="inputTime" style="width: 50%; height: 5vh; font-size: 1em; margin-top: 1vh" placeholder="請輸入時間" /> s
+                  </div>
+              </div>
+              <img src="./img/push_up1" />
             </div>
-            <img src="./img/push_up1" />
+            <a id="checkBtn" href="./push-up/single" onclick="">確認距離</a>
           </div>
-          <a id="checkBtn" href="./push-up/single" onclick="">確認距離</a>
         </div>
       </div>
-    </div>
-  </body>
+    </body>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        socket.on("connect", () => {
+            console.log(socket.id);
+        });
+        socket.on("distance", (data) => {
+            document.getElementById("currentDisance").innerHTML = data;
+        })
+
+        document.getElementById("checkBtn").onclick = () => {
+            const goal = document.getElementById("inputGoal").value
+            const distance = document.getElementById("distance").value
+            const time = document.getElementById("inputTime").value
+            localStorage.setItem("goal", goal)
+            localStorage.setItem("distance", distance)
+            localStorage.setItem("time", time)
+
+            if(!goal || !distance || !time){
+                alert("請輸入完整資料")
+                return false;
+            }
+        }
+        
+    </script>
 </html>
