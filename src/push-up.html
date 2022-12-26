@@ -106,13 +106,16 @@
           <div class="distance">
             <div class="distance-text">
               <p>當前距離</p>
-            <p class="dist">60.0</p>
-            <span>cm</span>
-            <!-- <input placeholder="請輸入距離" /> -->
+                <p class="dist">60.0</p>
+                <span>cm</span>
+                <div style="margin-top: 2vh;">
+                    <input id="distance" style="width: 50%; height: 5vh; font-size: 1em;" placeholder="請輸入距離" /> cm
+                    <input style="width: 50%; height: 5vh; font-size: 1em; margin-top: 1vh" placeholder="請輸入時間" /> s
+                </div>
             </div>
             <img src="./img/push_up1" />
           </div>
-          <a href="./push-up/single" onclick="">確認距離</a>
+          <a id="checkBtn" href="./push-up/single" onclick="">確認距離</a>
         </div>
       </div>
     </div>
