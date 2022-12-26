@@ -2,49 +2,22 @@ const express = require("express");
 const app = express();
 const server = require("http").createServer(app)
 const io = require("socket.io")(server);
+const route = require("./router/route")
+const imageRoute = require("./router/image")
+const singlePushup = require("./router/single_pushUp")
+const singlePlunk = require("./router/single_plunk")
+const dualPushup = require("./router/dual_pushUp")
+const dualPlunk = require("./router/dual_plunk")
 
 const port = 3000;
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/src/index.html");
-});
-
-app.get("/select_player", (req, res) => {
-  res.sendFile(__dirname + "/src/select_player.html");
-});
-
-app.get("/select_mode", (req, res) => {
-  res.sendFile(__dirname + "/src/select_mode.html");
-});
-
-app.get("/push-up", (req, res) => {
-  res.sendFile(__dirname + "/src/push-up.html");
-});
-
-app.get("/plunk", (req, res) => {
-  res.sendFile(__dirname + "/src/plunk.html");
-});
-
-app.get("/push-up/single", (req, res) => {
-  res.sendFile(__dirname + "/src/singleTime_count.html");
-});
-
-app.get("/push-up/dual", (req, res) => {
-  res.sendFile(__dirname + "/src/doubleTime_count.html");
-});
-
-app.get("/plunk/single", (req, res) => {
-  res.sendFile(__dirname + "/src/singleTime_comp.html");
-});
-
-app.get("/plunk/dual", (req, res) => {
-  res.sendFile(__dirname + "/src/doubleTime_comp.html");
-});
-
-app.get("/push-up/dual/end", (req, res) => {
-  res.sendFile(__dirname + "/src/double_end_page_count.html");
-});
+app.use(route);
+app.use(singlePlunk);
+app.use(singlePushup);
+app.use(dualPlunk);
+app.use(dualPushup);
+app.use("/img", imageRoute);
 
 // socket.io
 io.on('connection', (socket) => {
