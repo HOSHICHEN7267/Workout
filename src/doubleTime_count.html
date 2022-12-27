@@ -81,7 +81,6 @@
       }
   
       .mainText2 {
-        transform: translateY(-5px);
         text-align: center;
         font-size: 40px;
         color: #de3636;
@@ -123,8 +122,31 @@
         </br>
         <h1 class="mainText" style="transform: translateY(-30px)">倒數計時</h1>
         </br>
-        <h1 class="mainText2" style="transform: translateY(-60px)">30 <span>s</span></h1>
+        <p class="mainText2" style="transform: translateY(-10vh)"><span id="timeCount">waiting...</span> <span style="visibility:hidden" class="hint">s</span></p>
+        <p style="transform: translateY(-60px); text-align: center; color: #4d4d4d; font-size: 1.5em;visibility:hidden"><span class="hint">比賽進行中...</span></p>
         </br>
       </div>
     </body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      socket.on("connect", () => {
+        // 加入房間(進入頁面才加入房間)
+        socket.emit("join-push-up", localStorage.getItem('time'))
+        socket.on("set-push-up-time", (time) => {
+          document.getElementById("timeCount").innerText = "Ready!!";
+          let count = 3
+          const counter = setInterval(() => {
+            document.getElementById("timeCount").innerText = count;
+            count --;
+            if(count === -2){
+              document.getElementById("timeCount").innerText = time
+              document.getElementsByClassName("hint")[0].style.visibility = "visible";
+              document.getElementsByClassName("hint")[1].style.visibility = "visible";
+              clearInterval(counter)
+            }
+          }, 1000)
+        })
+      });
+    </script>
   </html>
