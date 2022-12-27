@@ -58,25 +58,20 @@
   }
   
   .neurobox{
-    width: 170px;
-    height: 200px;
+    width: 10vw;
+    height: 20vh;
     border-radius: 50px;
     background: #dedede;
-    transform: translateX(360px) translateY(-350px);
-
-    font-family: 'Noto Sans TC';
-    margin: auto;
-    line-height: 40px;
+    font-family: "Noto Sans TC";
   }
 
   .mainBox{
-    margin:0 auto;
+    margin: 0 auto;
     width: 700px;
     height: 500px;
     border-radius: 50px;
     background: #dedede;
-    transform: translateX(-100px) translateY(80px);
-    font-family: 'Noto Sans TC';
+    font-family: "Noto Sans TC";
   }
 
   .mainText{
@@ -91,6 +86,30 @@
     font-size: 70px;
     color: #DE3636;
   }
+  .startBtn{
+    width: 10vw;
+    height: 10vh;
+    font-size: 26px; 
+    background-color: #dedede; 
+    color: #de3636;
+    border-radius: 50px
+  }
+  .startBtn:hover{
+    background-color: #fff;
+    color: #de3636;
+  }
+  #mainPageBtn{
+    background-color: #dedede; 
+    margin-left: 3vw; 
+    width: 8vw; 
+    height: 5vh; 
+    font-size: 26px; 
+    border-radius: 50px
+  }
+  #mainPageBtn:hover{
+    background-color: #fff;
+    color: #de3636;
+  }
 </style>
 
   <head>
@@ -102,24 +121,59 @@
   <body style="background-color:black;">
     <div class="topbar">
       健身競賽系統 Workout
-    </div>
-    
-    <div class="mainBox">
-      <h2 class="mainText" style="transform:translateY(40px);">當前距離</h2>
-      <h2 class="mainText2">10cm</h2>
-      <h3 class="mainText">計時</h3>
-      <h2 class="mainText2" style="transform:translateY(-36px);">30s</h2>
+      <button id="mainPageBtn">回到首頁</button>
     </div>
 
-    <!-- <div>
-      <button id="btn">開始</button>
-    </div> -->
+    <div style="display: grid; grid-template-columns: auto auto auto auto auto auto; column-gap: 2vw; justify-content: center; align-content: center; margin-top: 12vh">
+      <div class="mainBox" style="grid-column: 1 / span 5;">
+        <h2 class="mainText" style="transform:translateY(40px);">當前距離</h2>
+        <div style="display: flex; flex-direction: row; justify-content: center;">
+          <span id="userDistance" class="mainText2">10</span>
+          <span class="mainText2">/</span>
+          <span id="goalDistance" class="mainText2">0</span>
+          <span class="mainText2" style="margin-left: 1vw; margin-bottom: 0; font-size: 2em; padding-top: 4vh;">cm</span>
+        </div>
+        <h3 class="mainText">計時</h3>
+        <div style="display: flex; flex-direction: row; justify-content: center;">
+          <span id="curSecond" class="mainText2">0</span>
+          <span class="mainText2">/</span>
+          <span id="goalSecond" class="mainText2">0</span>
+          <span class="mainText2" style="margin-left: 1vw; margin-bottom: 0; font-size: 2em; padding-top: 4vh;">s</span>
+        </div>
+      </div>
 
-    <div class="neurobox">
-      <h3 class="mainText" style="font-size:28px; transform:translateY(44px); letter-spacing:2px;">運動項目</h3>
-      <h3 class="mainText2" style="font-size:26px; transform:translateY(40px);">平板支撐</h3>
+      <div style="display: flex; align-items: center; flex-direction: column; grid-column: 6 / span 1;">
+        <div style="margin-bottom: 2vh; height: 10vh; padding-bottom: 2vh;"  >
+          <p class="mainText2" style="font-size:2em; color: white">平板支撐</p>
+        </div>
+        <button id="challengeBtn" class="startBtn">
+          挑戰極限
+        </button>
+        <button id="setBtn" class="startBtn">
+          組數挑戰
+        </button>
+        <div style="width: 10vw; height: 7vh; margin-top: 15vh;">
+            <p style="color: white; margin-left: 1vw; margin-top: 1vh; font-size: 2em">組數: <span id="setCount" style="color: white"></span></p>
+        </div>
+      </div>
     </div>
   </body>
+
+  <script>
+    document.getElementById("setCount").innerHTML = localStorage.getItem("setCount");
+    document.getElementById("goalSecond").innerText = localStorage.getItem("second");
+    // 設定目標距離
+    document.getElementById("goalDistance").innerText = localStorage.getItem("distance");
+    document.getElementById("mainPageBtn").onclick = () => {
+      window.location = "/";
+    }
+
+    //挑戰極限
+    document.getElementById("challengeBtn").onclick = () => {
+      document.getElementById("goalSecond").innerHTML = "&infin;";
+    }
+
+  </script>
 </html>
 
 

@@ -104,17 +104,46 @@
           <div class="distance">
             <div class="distance-text">
                 <p>當前距離</p>
-                <p class="dist">60.0</p>
+                <p id="currentDisance" class="dist">40</p>
                 <span>cm</span>
                 <div style="margin-top: 2vh;">
                     <input id="distance" style="width: 50%; height: 5vh; font-size: 1em;" placeholder="請輸入距離" /> cm
+                    <input id="second" style="width: 50%; height: 5vh; font-size: 1em; margin-top: 1vh" placeholder="請輸入單組秒數" /> s
                 </div>
             </div>
             <img src="./img/plunk1" />
           </div>
-          <a href="./plunk/single" onclick="">確認距離</a>
+          <a id="checkBtn" href="./plunk/single" onclick="">確認距離</a>
         </div>
       </div>
     </div>
   </body>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+      // 接收距離參數
+      const socket = io();
+      socket.on("connect", () => {
+          console.log(socket.id);
+      });
+      socket.on("distance", (data) => {
+          document.getElementById("currentDisance").innerHTML = data;
+      })
+
+      // 設定localstorage
+      document.getElementById("checkBtn").onclick = () => {
+        localStorage.clear()
+        const distance = document.getElementById("distance").value;
+        const second = document.getElementById("second").value;
+        localStorage.setItem("distance", distance);
+        // 預設60S
+        if(!second){
+          localStorage.setItem("second", 60);
+        }
+        localStorage.setItem("second", second);
+        localStorage.setItem("setCount", 0);
+      }
+
+
+  </script>
 </html>

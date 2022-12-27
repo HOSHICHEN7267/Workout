@@ -135,6 +135,7 @@
         })
 
         document.getElementById("checkBtn").onclick = () => {
+          localStorage.clear()
             const goal = document.getElementById("inputGoal").value
             const distance = document.getElementById("distance").value
             const time = document.getElementById("inputTime").value
