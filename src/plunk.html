@@ -135,6 +135,7 @@
         localStorage.clear()
         const distance = document.getElementById("distance").value;
         const second = document.getElementById("second").value;
+        localStorage.setItem("setCount", 0);
         localStorage.setItem("distance", distance);
         // 預設60S
         if(!second){

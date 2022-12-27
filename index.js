@@ -47,6 +47,9 @@ io.on('connection', (socket) => {
     socket.on("plunk-inf-challenge-stop", () => {
       io.emit("plunk-inf-challenge-stop");
     })
+    socket.on("plunk-set-challenge-end", () => {
+      io.emit("plunk-set-challenge-end");
+    })
     // =====================================================
 });
 

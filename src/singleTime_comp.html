@@ -131,7 +131,8 @@
           <span id="userDistance" class="mainText2">10</span>
           <span class="mainText2">/</span>
           <span id="goalDistance" class="mainText2">0</span>
-          <span class="mainText2" style="margin-left: 1vw; margin-bottom: 0; font-size: 2em; padding-top: 4vh;">cm</span>
+          <span class="mainText2" style="color:black; font-size:1.5em; padding-top:4vh">(&plusmn;5)</span>
+          <span class="mainText2" style="margin-left: 1vw; margin-bottom: 0; font-size: 1.5em; padding-top: 4vh; color:black">cm</span>
         </div>
         <h3 class="mainText">計時</h3>
         <div style="display: flex; flex-direction: row; justify-content: center;">
@@ -174,7 +175,54 @@
       window.location = "/";
     }
 
-    //挑戰極限
+    // 組數挑戰模式
+    document.getElementById("setBtn").onclick = () => {
+      let flag = 3
+      document.getElementById("setBtn").innerText = flag;
+      let countDown = setInterval(() => {
+          flag--;
+          document.getElementById("setBtn").innerText = flag;
+          if(flag === 0){
+              document.getElementById("setBtn").innerText = "Start!!!";
+              clearInterval(countDown);
+          }
+      }, 1000)
+
+      // 倒數完後開始
+      setTimeout(() => {
+        // 處理plunk開始事件============================
+        socket.emit("plunk-inf-challenge-start", localStorage.getItem("distance"))
+        //=============================================
+        let curSecond = 0;
+        let countDown2 = setInterval(() => {
+          curSecond++;
+          document.getElementById("curSecond").innerText = curSecond;
+          // 時間到結束，組數加一
+          if(curSecond === Number(localStorage.getItem("second"))){
+            localStorage.setItem("setCount", Number(localStorage.getItem("setCount"))+1);
+            document.getElementById("setCount").innerHTML = localStorage.getItem("setCount")
+            socket.emit("plunk-set-challenge-end");
+            clearInterval(countDown2);
+            document.getElementById("setBtn").innerText = "ReStart";
+            document.getElementById("setBtn").onclick = () => {
+                window.location.reload();
+            }
+          }
+        }, 1000)
+
+        // plunk結束處理
+        socket.on("plunk-inf-challenge-stop", () => {
+          clearInterval(countDown2);
+          document.getElementById("curSecond").innerText = "失敗";
+          document.getElementById("setBtn").innerText = "ReStart";
+          document.getElementById("setBtn").onclick = () => {
+              window.location.reload();
+          }
+        })
+      }, 3000)
+    }
+
+    // 挑戰極限模式
     document.getElementById("challengeBtn").onclick = () => {
       document.getElementById("goalSecond").innerHTML = "&infin;";
       let flag = 3
@@ -201,6 +249,7 @@
           // plunk結束處理
           socket.on("plunk-inf-challenge-stop", () => {
             clearInterval(countDown2);
+            document.getElementById("curSecond").innerText = "挑戰結束";
             document.getElementById("challengeBtn").innerText = "ReStart";
             document.getElementById("challengeBtn").onclick = () => {
                 window.location.reload();
