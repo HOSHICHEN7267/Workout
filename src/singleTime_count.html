@@ -170,7 +170,6 @@
     document.getElementById("mainPageBtn").onclick = () => {
         window.location = "/";
     }
-    localStorage.setItem("setCount", 0);
     document.getElementById("setCount").innerHTML = localStorage.getItem("setCount");
 
     // 遊戲開始
@@ -196,8 +195,8 @@
                 // 時間到結束
                 if(timeCount === 0){
                     // 組數計算: 時間到時doneCount >= goal算一組
-                    if(document.getElementById("doneCount").value >= localStorage.getItem("goal")){
-                        localStorage.setItem("setCount", localStorage.getItem("setCount")+1);
+                    if(Number(document.getElementById("doneCount").innerText) >= Number(localStorage.getItem("goal"))){
+                        localStorage.setItem("setCount", Number(localStorage.getItem("setCount"))+1);
                         document.getElementById("setCount").innerHTML = localStorage.getItem("setCount")
                     }
 
