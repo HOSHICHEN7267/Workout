@@ -28,7 +28,7 @@ io.on('connection', (socket) => {
         io.emit("distance", data);
     })
 
-    // push up 處裡
+    // push up 處裡=========================================
     socket.on("push-up-start", (distance) => {
       io.emit("push-up-start", distance);
     })
@@ -38,7 +38,16 @@ io.on('connection', (socket) => {
     socket.on('push-up-stop', () => {
       io.emit("push-up-stop");
     })
+    // =====================================================
 
+    // plunk 處理===========================================
+    socket.on("plunk-inf-challenge-start", (distance) => {
+      io.emit("plunk-inf-challenge-start", distance);
+    })
+    socket.on("plunk-inf-challenge-stop", () => {
+      io.emit("plunk-inf-challenge-stop");
+    })
+    // =====================================================
 });
 
 server.listen(port, () => {

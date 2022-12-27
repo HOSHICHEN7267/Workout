@@ -153,13 +153,19 @@
           組數挑戰
         </button>
         <div style="width: 10vw; height: 7vh; margin-top: 15vh;">
-            <p style="color: white; margin-left: 1vw; margin-top: 1vh; font-size: 2em">組數: <span id="setCount" style="color: white"></span></p>
+          <p style="color: white; margin-left: 1vw; margin-top: 1vh; font-size: 2em">組數: <span id="setCount" style="color: white"></span></p>
         </div>
       </div>
     </div>
   </body>
 
+  <script src="/socket.io/socket.io.js"></script>
   <script>
+    const socket = io();
+    socket.on('distance', (distance) => {
+      document.getElementById('userDistance').innerText = distance;
+    })
+
     document.getElementById("setCount").innerHTML = localStorage.getItem("setCount");
     document.getElementById("goalSecond").innerText = localStorage.getItem("second");
     // 設定目標距離
@@ -171,6 +177,36 @@
     //挑戰極限
     document.getElementById("challengeBtn").onclick = () => {
       document.getElementById("goalSecond").innerHTML = "&infin;";
+      let flag = 3
+      document.getElementById("challengeBtn").innerText = flag;
+      let countDown = setInterval(() => {
+          flag--;
+          document.getElementById("challengeBtn").innerText = flag;
+          if(flag === 0){
+              document.getElementById("challengeBtn").innerText = "Start!!!";
+              clearInterval(countDown);
+          }
+      }, 1000)
+      // 倒數完後開始
+      setTimeout(() => {
+          // 處理plunk開始事件============================
+          socket.emit("plunk-inf-challenge-start", localStorage.getItem("distance"))
+          //=============================================
+          let curSecond = 1;
+          let countDown2 = setInterval(() => {
+            document.getElementById("curSecond").innerText = curSecond;
+            curSecond++;
+          }, 1000)
+
+          // plunk結束處理
+          socket.on("plunk-inf-challenge-stop", () => {
+            clearInterval(countDown2);
+            document.getElementById("challengeBtn").innerText = "ReStart";
+            document.getElementById("challengeBtn").onclick = () => {
+                window.location.reload();
+            }
+          })
+      }, 3000)
     }
 
   </script>
