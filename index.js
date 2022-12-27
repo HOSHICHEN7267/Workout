@@ -27,6 +27,18 @@ io.on('connection', (socket) => {
         // console.log(data)
         io.emit("distance", data);
     })
+
+    // push up 處裡
+    socket.on("push-up-start", (distance) => {
+      io.emit("push-up-start", distance);
+    })
+    socket.on("push-up-count", (count) => {
+      io.emit("push-up-count", count);
+    })
+    socket.on('push-up-stop', () => {
+      io.emit("push-up-stop");
+    })
+
 });
 
 server.listen(port, () => {

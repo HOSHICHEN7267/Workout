@@ -162,7 +162,13 @@
     </div>
   </body>
   
+  <script src="/socket.io/socket.io.js"></script>
   <script>
+    const socket = io();
+    socket.on("connect", () => {
+        console.log(socket.id);
+    });
+
     document.getElementById("goal").innerText = localStorage.getItem("goal");
     document.getElementById("pushUpCount").innerHTML = localStorage.getItem("time")+" <span>s</span>";
     document.getElementById("mainPageBtn").onclick = () => {
@@ -186,12 +192,18 @@
 
         // 倒數完後開始
         setTimeout(() => {
+            // 發送push up 開始事件
+            socket.emit("push-up-start", localStorage.getItem("distance"))
+            socket.on("push-up-count", (count)=>{
+              document.getElementById("doneCount").innerText = count;
+            })
             let timeCount = Number(localStorage.getItem("time"));
             let countDown2 = setInterval(() => {
                 timeCount -= 1;
                 document.getElementById("pushUpCount").innerHTML = timeCount+" <span>s</span>";
                 // 時間到結束
                 if(timeCount === 0){
+                    socket.emit("push-up-stop");
                     // 組數計算: 時間到時doneCount >= goal算一組
                     if(Number(document.getElementById("doneCount").innerText) >= Number(localStorage.getItem("goal"))){
                         localStorage.setItem("setCount", Number(localStorage.getItem("setCount"))+1);
