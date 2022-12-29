@@ -19,38 +19,40 @@ app.use(dualPlunk);
 app.use(dualPushup);
 app.use("/img", imageRoute);
 
-const rooms = [{room:'room1', time: 0}, {room:'room2', time:0}, {room:'room3', time:0}, {room:'room4', time: 0}];
+// const rooms = [{room:'room1', time: 0}, {room:'room2', time:0}, {room:'room3', time:0}, {room:'room4', time: 0}];
 // socket.io
 io.on('connection', async(socket) => {
   console.log(socket.id + " is connected");
-  // socket.join("room");
-  // console.log(io.sockets.adapter.rooms)
+
+  socket.on("player-joined",(userId) => {
+    io.emit("player-joined", userId)
+  })
   socket.on("data", (data) => {
       // console.log(data)
-      io.emit("distance", data);
+      io.emit(`distance${data.userId}`, data.data);
   })
 
   // push up 處裡=========================================
-  socket.on("push-up-start", (distance) => {
-    io.emit("push-up-start", distance);
+  socket.on("push-up-start1", (distance) => {
+    io.emit("push-up-start1", distance);
   })
-  socket.on("push-up-count", (count) => {
-    io.emit("push-up-count", count);
+  socket.on("push-up-count1", (count) => {
+    io.emit("push-up-count1", count);
   })
-  socket.on('push-up-stop', () => {
-    io.emit("push-up-stop");
+  socket.on('push-up-stop1', () => {
+    io.emit("push-up-stop1");
   })
   // =====================================================
 
   // plunk 處理===========================================
-  socket.on("plunk-inf-challenge-start", (distance) => {
-    io.emit("plunk-inf-challenge-start", distance);
+  socket.on("plunk-inf-challenge-start1", (distance) => {
+    io.emit("plunk-inf-challenge-start1", distance);
   })
-  socket.on("plunk-inf-challenge-stop", () => {
-    io.emit("plunk-inf-challenge-stop");
+  socket.on("plunk-inf-challenge-stop1", () => {
+    io.emit("plunk-inf-challenge-stop1");
   })
-  socket.on("plunk-set-challenge-end", () => {
-    io.emit("plunk-set-challenge-end");
+  socket.on("plunk-set-challenge-end1", () => {
+    io.emit("plunk-set-challenge-end1");
   })
   // =====================================================
 

@@ -85,6 +85,15 @@
         font-size: 40px;
         color: #de3636;
       }
+
+      #mainPageBtn{
+        background-color: #dedede; 
+        margin-left: 3vw; 
+        width: 8vw; 
+        height: 5vh; 
+        font-size: 26px; 
+        border-radius: 50px
+      }
     </style>
   
     <head>
@@ -94,7 +103,10 @@
       <title>雙人結束頁面 計次類</title>
     </head>
     <body style="overflow: hidden; background-color: black">
-      <div class="topbar">健身競賽系統 Workout</div>
+      <div class="topbar">
+        健身競賽系統 Workout
+        <button id="mainPageBtn">回到首頁</button>
+      </div>
       <div class="boxes">
         <div class="neurobox">
           <p class="raceText">
@@ -129,6 +141,9 @@
     </body>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      document.getElementById("mainPageBtn").onclick = () => {
+        window.location = "/";
+      } 
       const socket = io();
       socket.on("connect", () => {
         // 加入房間(進入頁面才加入房間)
@@ -139,11 +154,17 @@
           const counter = setInterval(() => {
             document.getElementById("timeCount").innerText = count;
             count --;
-            if(count === -2){
+            if(count === -1){
               document.getElementById("timeCount").innerText = time
               document.getElementsByClassName("hint")[0].style.visibility = "visible";
               document.getElementsByClassName("hint")[1].style.visibility = "visible";
               clearInterval(counter)
+
+              // 發出比賽開始訊號
+              socket.emit("push-up-start", localStorage.getItem("distance"))
+              socket.on("push-up-count", (count)=>{
+                document.getElementById("doneCount").innerText = count;
+              })
             }
           }, 1000)
         })

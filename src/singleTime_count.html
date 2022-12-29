@@ -193,8 +193,8 @@
         // 倒數完後開始
         setTimeout(() => {
             // 發送push up 開始事件
-            socket.emit("push-up-start", localStorage.getItem("distance"))
-            socket.on("push-up-count", (count)=>{
+            socket.emit(`push-up-start${localStorage.getItem("userId")}`, localStorage.getItem("distance"))
+            socket.on(`push-up-count${localStorage.getItem("userId")}`, (count)=>{
               document.getElementById("doneCount").innerText = count;
             })
             let timeCount = Number(localStorage.getItem("time"));
@@ -203,7 +203,7 @@
                 document.getElementById("pushUpCount").innerHTML = timeCount+" <span>s</span>";
                 // 時間到結束
                 if(timeCount === 0){
-                    socket.emit("push-up-stop");
+                    socket.emit(`push-up-stop${localStorage.getItem("userId")}`);
                     // 組數計算: 時間到時doneCount >= goal算一組
                     if(Number(document.getElementById("doneCount").innerText) >= Number(localStorage.getItem("goal"))){
                         localStorage.setItem("setCount", Number(localStorage.getItem("setCount"))+1);

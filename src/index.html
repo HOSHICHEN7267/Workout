@@ -44,9 +44,34 @@
     <div class="raceText">
       <h1>START</h1>
       <h1>NOW</h1>
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <label>請選擇使用者:  </label>
+        <input type="radio" name="player" value="1">
+        <label for="player1">Player1</label>
+        <br>
+        <input type="radio" name="player" value="2">
+        <label for="player2">Player2</label>
+      </div>
       <div class="neurobox">
-        <a class="start-btn" href="./select_player">開始競賽</a>
+        <a id="startBtn" class="start-btn" href="./select_player" onclick="">開始競賽</a>
       </div>
     </div>
   </body>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    localStorage.clear();
+    const socket = io();
+    socket.on("connect", () => {
+      document.getElementById("startBtn").onclick = () => {
+        if(!document.querySelector('input[name="player"]:checked')){
+          alert("請選擇使用者名稱");
+          return false;
+        }
+        const userId = document.querySelector('input[name="player"]:checked').value;
+        localStorage.setItem("userId", userId);
+        socket.emit(`player-joined`, userId);
+      }
+    })
+  </script>
 </html>

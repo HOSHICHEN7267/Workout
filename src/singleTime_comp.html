@@ -163,7 +163,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
-    socket.on('distance', (distance) => {
+    socket.on(`distance${localStorage.getItem("userId")}`, (distance) => {
       document.getElementById('userDistance').innerText = distance;
     })
 
@@ -191,7 +191,7 @@
       // 倒數完後開始
       setTimeout(() => {
         // 處理plunk開始事件============================
-        socket.emit("plunk-inf-challenge-start", localStorage.getItem("distance"))
+        socket.emit(`plunk-inf-challenge-start${localStorage.getItem("userId")}`, localStorage.getItem("distance"))
         //=============================================
         let curSecond = 0;
         let countDown2 = setInterval(() => {
@@ -201,7 +201,7 @@
           if(curSecond === Number(localStorage.getItem("second"))){
             localStorage.setItem("setCount", Number(localStorage.getItem("setCount"))+1);
             document.getElementById("setCount").innerHTML = localStorage.getItem("setCount")
-            socket.emit("plunk-set-challenge-end");
+            socket.emit(`plunk-set-challenge-end${localStorage.getItem("userId")}`);
             clearInterval(countDown2);
             document.getElementById("setBtn").innerText = "ReStart";
             document.getElementById("setBtn").onclick = () => {
@@ -211,7 +211,7 @@
         }, 1000)
 
         // plunk結束處理
-        socket.on("plunk-inf-challenge-stop", () => {
+        socket.on(`plunk-inf-challenge-stop${localStorage.getItem("userId")}`, () => {
           clearInterval(countDown2);
           document.getElementById("curSecond").innerText = "失敗";
           document.getElementById("setBtn").innerText = "ReStart";
@@ -238,7 +238,7 @@
       // 倒數完後開始
       setTimeout(() => {
           // 處理plunk開始事件============================
-          socket.emit("plunk-inf-challenge-start", localStorage.getItem("distance"))
+          socket.emit(`plunk-inf-challenge-start${localStorage.getItem("userId")}`, localStorage.getItem("distance"))
           //=============================================
           let curSecond = 1;
           let countDown2 = setInterval(() => {
@@ -247,7 +247,7 @@
           }, 1000)
 
           // plunk結束處理
-          socket.on("plunk-inf-challenge-stop", () => {
+          socket.on(`plunk-inf-challenge-stop${localStorage.getItem("userId")}`, () => {
             clearInterval(countDown2);
             document.getElementById("curSecond").innerText = "挑戰結束";
             document.getElementById("challengeBtn").innerText = "ReStart";

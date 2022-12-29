@@ -126,13 +126,13 @@
       socket.on("connect", () => {
           console.log(socket.id);
       });
-      socket.on("distance", (data) => {
+      socket.on(`distance${localStorage.getItem("userId")}`, (data) => {
           document.getElementById("currentDisance").innerHTML = data;
       })
 
       // 設定localstorage
       document.getElementById("checkBtn").onclick = () => {
-        localStorage.clear()
+        //localStorage.clear()
         const distance = document.getElementById("distance").value;
         const second = document.getElementById("second").value;
         localStorage.setItem("setCount", 0);

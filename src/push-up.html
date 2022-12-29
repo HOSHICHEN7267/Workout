@@ -130,12 +130,12 @@
         socket.on("connect", () => {
             console.log(socket.id);
         });
-        socket.on("distance", (data) => {
+        socket.on(`distance${localStorage.getItem("userId")}`, (data) => {
             document.getElementById("currentDisance").innerHTML = data;
         })
 
         document.getElementById("checkBtn").onclick = () => {
-          localStorage.clear()
+            //localStorage.clear()
             const goal = document.getElementById("inputGoal").value
             const distance = document.getElementById("distance").value
             const time = document.getElementById("inputTime").value
