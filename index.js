@@ -19,7 +19,7 @@ app.use(dualPlunk);
 app.use(dualPushup);
 app.use("/img", imageRoute);
 
-// const rooms = [{room:'room1', time: 0}, {room:'room2', time:0}, {room:'room3', time:0}, {room:'room4', time: 0}];
+const rooms = [{room:'room1', time: 0}, {room:'room2', time:0}, {room:'room3', time:0}, {room:'room4', time: 0}];
 // socket.io
 io.on('connection', async(socket) => {
   console.log(socket.id + " is connected");
@@ -33,26 +33,26 @@ io.on('connection', async(socket) => {
   })
 
   // push up 處裡=========================================
-  socket.on("push-up-start1", (distance) => {
-    io.emit("push-up-start1", distance);
+  socket.on("push-up-start", (data) => {
+    io.emit(`push-up-start${data.userId}`, data.distance);
   })
-  socket.on("push-up-count1", (count) => {
-    io.emit("push-up-count1", count);
+  socket.on("push-up-count", (data) => {
+    io.emit(`push-up-count${data.userId}`, data.count);
   })
-  socket.on('push-up-stop1', () => {
-    io.emit("push-up-stop1");
+  socket.on('push-up-stop', (data) => {
+    io.emit(`push-up-stop${data.userId}`);
   })
   // =====================================================
 
   // plunk 處理===========================================
-  socket.on("plunk-inf-challenge-start1", (distance) => {
-    io.emit("plunk-inf-challenge-start1", distance);
+  socket.on("plunk-inf-challenge-start", (data) => {
+    io.emit(`plunk-inf-challenge-start${data.userId}`, data.distance);
   })
-  socket.on("plunk-inf-challenge-stop1", () => {
-    io.emit("plunk-inf-challenge-stop1");
+  socket.on("plunk-inf-challenge-stop", (data) => {
+    io.emit(`plunk-inf-challenge-stop${data.userId}`);
   })
-  socket.on("plunk-set-challenge-end1", () => {
-    io.emit("plunk-set-challenge-end1");
+  socket.on("plunk-set-challenge-end", () => {
+    io.emit(`plunk-set-challenge-end`);
   })
   // =====================================================
 

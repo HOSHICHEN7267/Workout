@@ -191,7 +191,7 @@
       // 倒數完後開始
       setTimeout(() => {
         // 處理plunk開始事件============================
-        socket.emit(`plunk-inf-challenge-start${localStorage.getItem("userId")}`, localStorage.getItem("distance"))
+        socket.emit(`plunk-inf-challenge-start`, {userId: localStorage.getItem('userId'), distance: localStorage.getItem("distance")})
         //=============================================
         let curSecond = 0;
         let countDown2 = setInterval(() => {
@@ -201,7 +201,7 @@
           if(curSecond === Number(localStorage.getItem("second"))){
             localStorage.setItem("setCount", Number(localStorage.getItem("setCount"))+1);
             document.getElementById("setCount").innerHTML = localStorage.getItem("setCount")
-            socket.emit(`plunk-set-challenge-end${localStorage.getItem("userId")}`);
+            socket.emit(`plunk-set-challenge-end`, {userId: localStorage.getItem('userId')});
             clearInterval(countDown2);
             document.getElementById("setBtn").innerText = "ReStart";
             document.getElementById("setBtn").onclick = () => {
@@ -238,7 +238,7 @@
       // 倒數完後開始
       setTimeout(() => {
           // 處理plunk開始事件============================
-          socket.emit(`plunk-inf-challenge-start${localStorage.getItem("userId")}`, localStorage.getItem("distance"))
+          socket.emit(`plunk-inf-challenge-start`, {userId: localStorage.getItem("userId"), distance: localStorage.getItem("distance")})
           //=============================================
           let curSecond = 1;
           let countDown2 = setInterval(() => {

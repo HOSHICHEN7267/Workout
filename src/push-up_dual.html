@@ -125,7 +125,7 @@
   <script>
       const socket = io();
       socket.on("connect", () => {
-        socket.on("distance", (data) => {
+        socket.on(`distance${localStorage.getItem("userId")}`, (data) => {
             document.getElementById("currentDisance").innerHTML = data;
         })
       });
