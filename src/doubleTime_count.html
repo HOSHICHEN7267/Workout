@@ -127,15 +127,15 @@
         </div>
       </div>
   
-      <div class="mainBox">
+      <div class="mainBox" style="display: flex; flex-direction: column;">
         <h1 class="mainText">您的次數</h1>
         </br >
         <h2 class="mainText2" id="doneCount">0</h2>
         </br>
-        <h1 class="mainText" style="transform: translateY(-30px)">倒數計時</h1>
-        </br>
-        <p class="mainText2" style="transform: translateY(-10vh)"><span id="timeCount">waiting...</span> <span style="visibility:hidden" class="hint">s</span></p>
-        <p style="transform: translateY(-60px); text-align: center; color: #4d4d4d; font-size: 1.5em;visibility:hidden"><span id="hint" class="hint">比賽進行中...</span></p>
+        <h1 class="mainText" style="transform: translateY(-30px); margin-bottom: 0">倒數計時</h1>
+        <p id="counter" style="margin-top: 0;" class="mainText2" ><span id="timeCount">waiting...</span> <span style="visibility:hidden" class="hint">s</span></p>
+        <button class="mainText2" style="margin-bottom: 3vh" hidden id="againBtn">再一次!!</button>
+        <p style="text-align: center; color: #4d4d4d; font-size: 1.5em; margin-top: 0;" id="hint"></p>
         </br>
       </div>
     </body>
@@ -156,6 +156,11 @@
         // 加入房間(進入頁面才加入房間)
         socket.emit("join-push-up", localStorage.getItem('time'))
         socket.on("set-push-up-time", (room) => {
+          // 再一次的初始化設定
+          document.getElementById("againBtn").hidden = true;
+          document.getElementById("counter").hidden = false;
+          document.getElementById("hint").innerText = ""
+          document.getElementsByClassName("hint")[0].style.visibility = "hidden"
           // 紀錄房間名稱
           localStorage.setItem('roomName',room.roomName);
           document.getElementById("timeCount").innerText = "Ready!!";
@@ -167,7 +172,7 @@
             if(count === -1){
               document.getElementById("timeCount").innerText = room.roomTime
               document.getElementsByClassName("hint")[0].style.visibility = "visible";
-              document.getElementsByClassName("hint")[1].style.visibility = "visible";
+              document.getElementById("hint").innerText = "比塞進行中..."
               clearInterval(counter)
 
               // 發出比賽開始訊號
@@ -187,6 +192,11 @@
                   socket.emit(`push-up-stop`, {userId: localStorage.getItem("userId")});
                   clearInterval(counter2)
                   document.getElementById("hint").innerText = "時間到~"
+                  document.getElementById("counter").hidden = true;
+                  document.getElementById("againBtn").hidden = false;
+                  document.getElementById("againBtn").onclick = () => {
+                    window.location.reload();
+                  }
                 }
               } , 1000)
             }
