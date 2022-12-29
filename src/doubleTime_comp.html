@@ -36,14 +36,11 @@
   
       .neurobox {
         width: 250px;
-        height: 150px;
+        height: 15vh;
         border-radius: 50px;
         background: #dedede;
-  
-        transform: translateX(160px);
-  
         font-family: "Noto Sans TC";
-        margin: auto;
+        margin: auto 0;
         line-height: 40px;
       }
   
@@ -65,7 +62,6 @@
   
       .mainBox {
         margin: 0 auto;
-        transform: translateY(-280px) translateX(180px);
         width: 500px;
         height: 500px;
         border-radius: 50px;
@@ -74,17 +70,29 @@
         font-family: "Noto Sans TC";
       }
   
-      .mainText {
-        transform: translateY(30px);
-        text-align: center;
-        font-size: 30px;
-        color: #4d4d4d;
-      }
-  
-      .mainText2 {
-        transform: translateY(-5px);
+      .mainText{
         text-align: center;
         font-size: 40px;
+        letter-spacing: 6px;
+        color: #4d4d4d;
+      }
+    
+      .mainText2{
+        text-align: center;
+        font-size: 70px;
+        color: #DE3636;
+      }
+
+      #mainPageBtn{
+        background-color: #dedede; 
+        margin-left: 3vw; 
+        width: 8vw; 
+        height: 5vh; 
+        font-size: 26px; 
+        border-radius: 50px
+      }
+      #mainPageBtn:hover{
+        background-color: #fff;
         color: #de3636;
       }
     </style>
@@ -96,37 +104,144 @@
       <title>雙人結束頁面 計次類</title>
     </head>
     <body style="overflow: hidden; background-color: black">
-      <div class="topbar">健身競賽系統 Workout</div>
-      <div class="boxes">
-        <div class="neurobox">
-          <p class="raceText">
-            <b>競賽項目</b>
-          </p>
-          <br/>
-          <p class="raceText2">平板支撐</p>
+      <div class="topbar">健身競賽系統 Workout<button id="mainPageBtn">回到首頁</button></div>
+      
+      
+      <div style="display: grid; grid-template-columns: auto auto auto auto auto auto; column-gap: 0; margin-top: 10vh">
+        <div style="grid-column: 3 / span 1;display: flex; justify-content: center; align-items: center; flex-direction: column">
+            <div class="neurobox">
+              <p class="raceText">
+                <b>競賽項目</b>
+              </p>
+              <br/>
+              <p class="raceText2">平板支撐</p>
+            </div>
+      
+            <div class="neurobox">
+              <p class="raceText">
+                <b>對手距離</b>
+              </p>
+              <br />
+              <div style="display: flex; justify-content: center; align-items: center">
+                <p id="raceDistance" class="raceText2" style="margin: 0;">0</p>/<p id="raceGoal" class="raceText2" style="margin: 0;">0</p><span>cm</span>
+              </div>
+            </div>
+            <div class="neurobox">
+              <p class="raceText">
+                <b>對手秒數</b>
+              </p>
+              <br />
+              <div style="display: flex; justify-content: center; align-items: center">
+                <p id="raceSecond" class="raceText2" style="margin: 0;">0</p><span>s</span>
+              </div>
+            </div>
+
         </div>
-      </div>
-  
-      <div class="boxes">
-        <div class="neurobox">
-          <p class="raceText">
-            <b>對手狀態</b>
-          </p>
-          <br />
-          <p class="raceText2">5 <span>cm</span></p>
+
+        <div class="mainBox" style="grid-column: 3.1 / span 2;">
+          <h2 class="mainText" style="transform:translateY(40px);">當前距離</h2>
+          <div style="display: flex; flex-direction: row; justify-content: center;">
+            <span id="userDistance" class="mainText2">10</span>
+            <span class="mainText2">/</span>
+            <span id="goalDistance" class="mainText2">0</span>
+            <span class="mainText2" style="color:black; font-size:1.5em; padding-top:4vh">(&plusmn;5)</span>
+            <span class="mainText2" style="margin-left: 1vw; margin-bottom: 0; font-size: 1.5em; padding-top: 4vh; color:black">cm</span>
+          </div>
+          <h3 class="mainText">計時</h3>
+          <div style="display: flex; flex-direction: column; justify-content: center;">
+            <p id="counter" style="margin-top: 0;" class="mainText2" ><span id="timeCount">waiting...</span> <span style="visibility:hidden" class="hint">s</span></p>
+            <button class="mainText2" style="margin-bottom: 3vh" hidden id="againBtn">再一次!!</button>
+            <p style="text-align: center; color: #4d4d4d; font-size: 1.5em; margin-top: 0;" id="hint"></p>
+          </div>
         </div>
-      </div>
-  
-      <div class="mainBox">
-        <h1 class="mainText">當前距離</h1>
-        </br >
-        <h2 class="mainText2">10cm</h2>
-        </br>
-        <h1 class="mainText" style="transform: translateY(-30px)">計時</h1>
-        </br>
-        <h1 class="mainText2" style="transform: translateY(-60px)">30 <span>s</span></h1>
-        </br>
       </div>
     </body>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      // 設定目標距離
+      document.getElementById("goalDistance").innerText = localStorage.getItem("distance");
+      document.getElementById("mainPageBtn").onclick = () => {
+        window.location = "/";
+      } 
+
+      socket.on("connect", () => {
+        socket.on(`distance${localStorage.getItem("userId")}`, (distance) => {
+          document.getElementById('userDistance').innerText = distance;
+          socket.emit("plunk-distance-to", {userId: localStorage.getItem("userId"), distance: distance, roomName: localStorage.getItem("roomName")})
+        })
+        // 接收並顯示對手狀態 (待辦)
+        socket.on("plunk-distance-to", (data)=>{
+          if(data.userId !== localStorage.getItem("userId")){
+            document.getElementById("raceDistance").innerText = data.distance;
+          }
+        })
+        socket.on("plunk-second-to", (data)=>{
+          if(data.userId !== localStorage.getItem("userId")){
+            document.getElementById("raceSecond").innerText = data.second;
+          }
+        })
+        // 加入房間(進入頁面才加入房間)(待辦)
+        socket.emit("join-plunk")
+        socket.on("set-plunk-room", (room) => {
+          // 再一次的初始化設定
+          document.getElementById("againBtn").hidden = true;
+          document.getElementById("counter").hidden = false;
+          document.getElementById("hint").innerText = ""
+          document.getElementById("raceSecond").innerText = 0
+          document.getElementsByClassName("hint")[0].style.visibility = "hidden"
+          // 紀錄房間名稱
+          localStorage.setItem('roomName',room.roomName);
+          document.getElementById("timeCount").innerText = "Ready!!";
+          // 監聽對手距離
+          socket.emit("plunk-goalDistance-to", {userId: localStorage.getItem("userId"), goalDistance: localStorage.getItem("distance"), roomName: localStorage.getItem("roomName")})
+          socket.on("plunk-goalDistance-to", (data)=>{
+            if(data.userId !== localStorage.getItem("userId")){
+              document.getElementById("raceGoal").innerText = data.goalDistance;
+            }
+          })
+
+          let count = 3
+          const counter = setInterval(() => {
+            document.getElementById("timeCount").innerText = count;
+            count --;
+            // 倒數3秒後比賽開始
+            if(count === -1){
+              document.getElementsByClassName("hint")[0].style.visibility = "visible";
+              document.getElementById("hint").innerText = "比塞進行中..."
+              clearInterval(counter)
+
+              // 處理plunk開始事件============================
+              socket.emit(`plunk-inf-challenge-start`, {userId: localStorage.getItem("userId"), distance: localStorage.getItem("distance")})
+              //=============================================
+              let curSecond = 1;
+              let countDown2 = setInterval(() => {
+                document.getElementById("timeCount").innerText = curSecond;
+                // 發送當前秒數
+                socket.emit("plunk-second-to", {userId: localStorage.getItem("userId"), second: curSecond, roomName: localStorage.getItem("roomName")})
+                curSecond++;
+              }, 1000)
+
+              // plunk結束處理
+              socket.on(`plunk-inf-challenge-stop`, (data) => {
+                if(data.userId === localStorage.getItem("userId")){
+                  clearInterval(countDown2);
+                  document.getElementById("hint").innerText = "挑戰結束";
+                  document.getElementById("againBtn").onclick = () => {
+                    window.location.reload();
+                  }
+                }
+                else{
+                  document.getElementById("hint").innerText = "對手已失敗";
+                  document.getElementById("againBtn").hidden = false;
+                }
+              })
+            }
+          }, 1000)
+        })
+      });
+    </script>
   </html>
   

@@ -247,12 +247,14 @@
           }, 1000)
 
           // plunk結束處理
-          socket.on(`plunk-inf-challenge-stop${localStorage.getItem("userId")}`, () => {
-            clearInterval(countDown2);
-            document.getElementById("curSecond").innerText = "挑戰結束";
-            document.getElementById("challengeBtn").innerText = "ReStart";
-            document.getElementById("challengeBtn").onclick = () => {
+          socket.on(`plunk-inf-challenge-stop`, (data) => {
+            if(data.userId === localStorage.getItem("userId")){
+              clearInterval(countDown2);
+              document.getElementById("hint").innerText = "挑戰結束";
+              document.getElementById("againBtn").hidden = false;
+              document.getElementById("againBtn").onclick = () => {
                 window.location.reload();
+              }
             }
           })
       }, 3000)
