@@ -123,19 +123,19 @@
             <b>對手次數</b>
           </p>
           <br />
-          <p class="raceText2">87</p>
+          <p class="raceText2" id="doneCount2">0</p>
         </div>
       </div>
   
       <div class="mainBox">
         <h1 class="mainText">您的次數</h1>
         </br >
-        <h2 class="mainText2">666</h2>
+        <h2 class="mainText2" id="doneCount">0</h2>
         </br>
         <h1 class="mainText" style="transform: translateY(-30px)">倒數計時</h1>
         </br>
         <p class="mainText2" style="transform: translateY(-10vh)"><span id="timeCount">waiting...</span> <span style="visibility:hidden" class="hint">s</span></p>
-        <p style="transform: translateY(-60px); text-align: center; color: #4d4d4d; font-size: 1.5em;visibility:hidden"><span class="hint">比賽進行中...</span></p>
+        <p style="transform: translateY(-60px); text-align: center; color: #4d4d4d; font-size: 1.5em;visibility:hidden"><span id="hint" class="hint">比賽進行中...</span></p>
         </br>
       </div>
     </body>
@@ -146,25 +146,49 @@
       } 
       const socket = io();
       socket.on("connect", () => {
+        // 接收並顯示對手次數
+        socket.on("push-up-count-to", (data)=>{
+          // console.log(data)
+          if(data.userId !== localStorage.getItem("userId")){
+            document.getElementById("doneCount2").innerText = data.count;
+          }
+        })
         // 加入房間(進入頁面才加入房間)
         socket.emit("join-push-up", localStorage.getItem('time'))
-        socket.on("set-push-up-time", (time) => {
+        socket.on("set-push-up-time", (room) => {
+          // 紀錄房間名稱
+          localStorage.setItem('roomName',room.roomName);
           document.getElementById("timeCount").innerText = "Ready!!";
           let count = 3
           const counter = setInterval(() => {
             document.getElementById("timeCount").innerText = count;
             count --;
+            // 倒數3秒後比賽開始
             if(count === -1){
-              document.getElementById("timeCount").innerText = time
+              document.getElementById("timeCount").innerText = room.roomTime
               document.getElementsByClassName("hint")[0].style.visibility = "visible";
               document.getElementsByClassName("hint")[1].style.visibility = "visible";
               clearInterval(counter)
 
               // 發出比賽開始訊號
-              socket.emit("push-up-start", localStorage.getItem("distance"))
-              socket.on("push-up-count", (count)=>{
+              socket.emit("push-up-start", {distance: localStorage.getItem("distance"), userId: localStorage.getItem("userId")})
+              socket.on(`push-up-count${localStorage.getItem("userId")}`, (count)=>{
                 document.getElementById("doneCount").innerText = count;
+                socket.emit("push-up-count-to", {userId: localStorage.getItem("userId"), count: count, roomName: localStorage.getItem("roomName")})
               })
+
+              // 倒數比賽時間
+              let tmpTime = room.roomTime;
+              const counter2 = setInterval(() => {
+                tmpTime --;
+                document.getElementById("timeCount").innerText = tmpTime
+                // 時間到比賽結束
+                if(tmpTime == 0){
+                  socket.emit(`push-up-stop`, {userId: localStorage.getItem("userId")});
+                  clearInterval(counter2)
+                  document.getElementById("hint").innerText = "時間到~"
+                }
+              } , 1000)
             }
           }, 1000)
         })

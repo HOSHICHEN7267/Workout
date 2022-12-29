@@ -34,6 +34,7 @@ io.on('connection', async(socket) => {
 
   // push up 處裡=========================================
   socket.on("push-up-start", (data) => {
+    console.log(data);
     io.emit(`push-up-start${data.userId}`, data.distance);
   })
   socket.on("push-up-count", (data) => {
@@ -69,12 +70,16 @@ io.on('connection', async(socket) => {
         }
         else if(io.sockets.adapter.rooms.get(room.room).size === 2){
           // 當兩人都進入房間就設定時間
-          io.to(room.room).emit("set-push-up-time", room.time)
+          io.to(room.room).emit("set-push-up-time", {roomTime: room.time, roomName: room.room})
         }
         break;
       }
     }
   })
+  // 監聽兩人的次數
+  socket.on('push-up-count-to', (data) => [
+    io.to(data.roomName).emit('push-up-count-to', data)
+  ])
   // =====================================================
 
 });
