@@ -104,17 +104,37 @@
           <div class="distance">
             <div class="distance-text">
                 <p>當前距離</p>
-                <p class="dist">60.0</p>
+                <p id="currentDisance" class="dist">40</p>
                 <span>cm</span>
                 <div style="margin-top: 2vh;">
-                    <input id="distance" style="width: 50%; height: 5vh; font-size: 1em;" placeholder="請輸入距離" /> cm
+                  <input type="number" id="distance" style="width: 50%; height: 5vh; font-size: 1em; margin-top: 1vh" placeholder="請輸入距離" /> cm
                 </div>
             </div>
             <img src="./img/plunk1" />
           </div>
-          <a href="./plunk/dual" onclick="">確認距離</a>
+          <a id="checkBtn" href="./plunk/dual" onclick="">確認距離</a>
         </div>
       </div>
     </div>
   </body>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    document.getElementById("checkBtn").onclick = () => {
+      const distance = document.getElementById("distance").value
+      localStorage.setItem("distance", distance)
+
+      if(!distance){
+          alert("請輸入完整資料")
+          return false;
+      }
+    }
+    const socket = io();
+    socket.on("connect", () => {
+      socket.on(`distance${localStorage.getItem("userId")}`, (data) => {
+          document.getElementById("currentDisance").innerHTML = data;
+      })
+    });
+
+  </script>
 </html>
